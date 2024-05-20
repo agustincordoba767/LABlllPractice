@@ -1,29 +1,38 @@
-import React, { useState } from 'react'
-import InputGroupText from 'react-bootstrap/esm/InputGroupText';
-import PropTypes from 'prop-types'
+import React, { useState } from "react";
+import { InputGroup, Button, Form } from "react-bootstrap";
+import PropTypes from "prop-types";
+import "./NewTask.css";
 
-const Newtask = ({onHandleAddNewTask}) => {
+const NewTask = ({ onHandleAddNewTask }) => {
+  const [textTask, setTextTask] = useState("");
 
-    const[enteredTask, setEnteredTask] = useState("");
-    
-
-    return (
-        <div>
-            <InputGroup className="mb-3">
-                <Form.Control
-                    placeholder="Ingresar tarea"
-                    aria-label="Ingresar tarea"
-                    aria-describedby="basic-addon2"
-                />
-                <Button variant="dark" id="button-addon2" onClick={onHandleAddNewTask}>
-                    Agregar
-                </Button>
-            </InputGroup>
-        </div>
-    )
+  const handleNewTask = (e) => {
+    setTextTask(e.target.value);
+  };
+  const handleAddNewTask = (e) => {
+    e.preventDefault();
+    onHandleAddNewTask(textTask);
+    setTextTask("");
+  };
+  return (
+    <div>
+      <InputGroup className="mb-3">
+        <Form.Control
+          className="task-back"
+          placeholder="Add Task"
+          aria-describedby="basic-addon2"
+          value={textTask}
+          onChange={handleNewTask}
+        />
+        <Button variant="light" id="button-addon2" onClick={handleAddNewTask}>
+          Add
+        </Button>
+      </InputGroup>
+    </div>
+  );
 };
-Newtask.PropTypes = {
-    onHandleAddNewTask: PropTypes.func.isRequired
-}
+NewTask.PropTypes = {
+  onHandleAddNewTask: PropTypes.func.isRequired,
+};
 
-export default Newtask
+export default NewTask;
